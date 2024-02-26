@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
+    "lucide-react": "^0.341.0",
     "peerjs": "^1.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
