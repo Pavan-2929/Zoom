@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import Peer from "peerjs";
+import { useSocket } from "../context/SocketContext";
+import { useParams } from "react-router-dom";
 
 export const usePeer = () => {
+  const socket = useSocket();
   const [peer, setPeer] = useState(null);
   const [myId, setMyId] = useState("");
   const isPeerInitialized = useRef(false);
+  const { roomId } = useParams();
 
   useEffect(() => {
     if (!isPeerInitialized.current && !peer) {
@@ -12,6 +16,8 @@ export const usePeer = () => {
       myPeer.on("open", (id) => {
         console.log(`peer id is ${id}`);
         setMyId(id);
+
+        socket?.emit("join-room", roomId, id);
       });
       setPeer(myPeer);
       isPeerInitialized.current = true;
@@ -22,7 +28,7 @@ export const usePeer = () => {
         peer.destroy();
       }
     };
-  }, [peer]);
+  }, [peer, socket, roomId]);
 
   return {
     peer,
