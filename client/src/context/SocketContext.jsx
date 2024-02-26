@@ -12,7 +12,10 @@ export const SocketProvider = (props) => {
   const { children } = props;
   const [socket, setSocket] = useState(null);
 
-  const connection = useMemo(() => io("localhost:8000"), []);
+  const connection = useMemo(
+    () => io("https://zoom-backend-wmm4.onrender.com"),
+    []
+  );
   useEffect(() => {
     setSocket(connection);
   }, [connection]);
